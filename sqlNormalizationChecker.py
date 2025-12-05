@@ -120,7 +120,15 @@ for i in tables[1:]:
 for c, i in enumerate(tables2):
     #print(i)
     print(f"CREATE TABLE {i.split(',')[0] if c != 0 else 'base'}Stuff AS SELECT {i} FROM OGDataTable;", end="")
-
+for c, i in enumerate(tables2):
+    sp = i.split(",")
+    for j in sp:
+        c = 0
+        for k in sp:
+            if k in f[j]:
+                c += 1
+            if c != 0 and c != len(sp)-1:
+                print("uto", j,k,i,f[j],c)
 
 
 
