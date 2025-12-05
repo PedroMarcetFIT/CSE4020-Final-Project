@@ -15,7 +15,7 @@ for d1 in data[1].split(","):
         else:
             typ = 1
     types.append(typ)
-for v in data[1:]:
+for v in data[1:2]:
     temp = []
     stk = [[]]
     quots = 1

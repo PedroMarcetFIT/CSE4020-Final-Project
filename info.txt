@@ -63,3 +63,28 @@ Step 14:
 Step 15:
 	open up a new terminal window to the directory and run:
 	mysqldump -u root -p OGDataBase OGDataTable > OGDataTable.sql
+
+Step 16:
+	rename. The newly created:
+	OGDataTable.sql
+	to
+	DataTableAfterPart1.sql
+
+Phase 2:
+Step 1:
+	run sqlNormalizationChecker.py
+	it will spit out:
+	CREATE TABLE baseStuff AS SELECT orderID,productID,unitPrice,quantity,discount FROM OGDataTable;CREATE TABLE orderIDStuff AS SELECT orderID,customerID,employeeID,orderDate,requiredDate,shippedDate,shipVia,Freight FROM OGDataTable;CREATE TABLE customerIDStuff AS SELECT customerID,companyName,contactName,contactTitle FROM OGDataTable;CREATE TABLE employeeIDStuff AS SELECT employeeID,employees_lastName,employees_firstName,employees_title FROM OGDataTable;CREATE TABLE productIDStuff AS SELECT productID,productName,supplierID,categoryID,quantityPerUnit,unitPrice_1,unitsInStock,unitsOnOrder,reorderLevel FROM OGDataTable;CREATE TABLE supplierIDStuff AS SELECT supplierID,suppliers_companyName,suppliers_contactName,suppliers_contactTitle FROM OGDataTable;CREATE TABLE categoryIDStuff AS SELECT categoryID,categoryName FROM OGDataTable;CREATE TABLE quantityPerUnitStuff AS SELECT quantityPerUnit,discontinued FROM OGDataTable;
+
+	past that in the mysql terminal
+Step 15:
+	open up the other terminal window and run:
+	mysqldump -u root -p OGDataBase OGDataTable > OGDataTable.sql
+Step 3:
+	rename. The newly created:
+	OGDataTable.sql
+	to
+	DataTableAfterPart2.sql
+
+
+
