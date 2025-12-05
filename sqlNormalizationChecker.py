@@ -119,7 +119,8 @@ for i in tables[1:]:
 #print("_"*30)
 for c, i in enumerate(tables2):
     #print(i)
-    print(f"CREATE TABLE {i.split(',')[0] if c != 0 else 'base'}Stuff AS SELECT {i} FROM OGDataTable;", end="")
+    print(f"CREATE TABLE {i.split(',')[0] if c != 0 else 'base'}Stuff AS SELECT DISTINCT {i} FROM OGDataTable;", end="")
+    #print(f"DROP TABLE {i.split(',')[0] if c != 0 else 'base'}Stuff;", end="")
 for c, i in enumerate(tables2):
     sp = i.split(",")
     for j in sp:
@@ -127,8 +128,8 @@ for c, i in enumerate(tables2):
         for k in sp:
             if k in f[j]:
                 c += 1
-            if c != 0 and c != len(sp)-1:
-                print("uto", j,k,i,f[j],c)
+        if c != 0 and c != len(sp)-1:
+            print("uto", j,i,f[j],c)
 
 
 
