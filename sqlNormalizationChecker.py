@@ -103,10 +103,22 @@ fullcut = [i for i in full if i not in used]
 tables = [",".join(fullcut)]
 for i in f5:
     tables.append(",".join([i]+f5[i]))
+tables2 = [tables[0]]
+seen = {i:True for i in tables[0]}
+for i in tables[1:]:
+    sp = i.split(",")
+    temp = [sp[0]]
+    for j in sp[1:]:
+        if j not in seen:
+            temp.append(j)
+            seen[j] = True
+    if len(sp) > 1:
+        tables2.append(",".join(sp))
 #for i in tables:
 #    print(i)
 #print("_"*30)
-for c, i in enumerate(tables):
+for c, i in enumerate(tables2):
+    #print(i)
     print(f"CREATE TABLE {i.split(',')[0] if c != 0 else 'base'}Stuff AS SELECT {i} FROM OGDataTable;", end="")
 
 
