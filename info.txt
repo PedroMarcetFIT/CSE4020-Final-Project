@@ -1,90 +1,63 @@
-Phase 1:
+Dependencies:
+	- MySQL Ver 9.5.0
+
+Setup:
+	This should be done in a linux/mac terminal. With Windows
+	machines, WSL works.
+	Run the following commands:
+		sudo apt update
+		sudo apt install mysql-server
+		sudo service mysql start
+
+---Phase 1---
 Step 1:
-	clean the data by saving the .xlsx file as a .csv then running the provided dataCleaner python script. This will produce a CompanyDataCleaned.csv file
+	Save the "CompanyData.xlsx" file as a CompanyData.csv. This
+	can be done through most sheet editors (like Excel).
+
 Step 2:
-	on your Mac open up a terminal navigate to the directory and install mysql version:
-	mysql  Ver 9.5.0 for macos14.8 on x86_64 (Home brew)
-	by running the command:
-	brew install mysql
+	Run the provided "dataCleaner.py" script. This will produce
+	the "CompanyDataCleaned.csv" file.
+
 Step 3:
-	run:
-	brew install mysql-shell
-	to install mysqlsh version:
-	mysqlsh   Ver 9.5.0 for macos15 on x86_64 - for MySQL 9.5.0 (MySQL Community Server (GPL))
+	Ensure mysql is running with:
+		sudo service mysql status
+	Then enter the MySQL shell with the following command:
+		sudo mysql --local-infile=1 -u root -p
+	This will enable local file copying (the .csv)
+
 Step 4:
-	run:
-	brew services start mysql
-	I do not know if this helps but I ran it so it might be nessisary to start mysql
+	Run the following command to finish enabling local file
+	copying:
+		SET GLOBAL local_infile = 1;
+
 Step 5:
-	run:
-	mysqlsh
-	to start the mysqlsh shell
-	then:
-	\sql
-	(I do not think the \sql) part doesn't actualy do anything but I ran it so you should to to be safe
+	Create the database with:
+		CREATE DATABASE OGDataBase;
+	Then use it with:
+		USE OGDataBase;
+
 Step 6:
-	connect to the sql database with:
-	\connect root@localhost
-	then when it asks for the password hit enter
-	then when it asks if you would like to save the password hit enter
-	then it will say something about autocompleting the password which might mean you will get locked out if you leave since you do not know the password so do not close the window
+	To create and populate the table, copy and run the commands
+	in "OGDataTableCreator.sql".
+	
+	Note that the LOAD DATA INFILE command requires you replace
+	"<LOCAL-PATH-HERE>" with your local path to the project's
+	folder.
+
 Step 7:
-	realize steps 3-7 probably just made things worse by potentially locking yourself out so switch to a separate tab and go back to the correct directory to run
-Step 8:
-	time travel to before step 3 and run:
-	mysql -u root -p
-	then when it asks for a password hit enter. This will start the mysql shell
-	(this might not work if you skipped do not time traveling as the password might be different)
-Step 9:
-	run 
-	CREATE DATABASE OGDataBase;
-	to create the database then:
-	USE OGDataBase;
-	to enter the database
-Step 10:
-	outside of the shell you just created run sqlTableCreationGeneratorScript.py
-	this will print out:
-	CREATE TABLE OGDataTable (orderID INT,customerID VARCHAR(255),employeeID INT,orderDate DATETIME,requiredDate DATETIME,shippedDate DATETIME,shipVia INT,Freight FLOAT,productID INT,unitPrice INT,quantity INT,discount INT,companyName VARCHAR(255),contactName VARCHAR(255),contactTitle VARCHAR(255),employees_lastName VARCHAR(255),employees_firstName VARCHAR(255),employees_title VARCHAR(255),productName VARCHAR(255),supplierID INT,categoryID INT,quantityPerUnit VARCHAR(255),unitPrice_1 INT,unitsInStock INT,unitsOnOrder INT,reorderLevel INT,discontinued INT,categoryName VARCHAR(255),suppliers_companyName VARCHAR(255),suppliers_contactName VARCHAR(255),suppliers_contactTitle VARCHAR(255));
+	To finish up, in a separate shell (outside of the MySQL
+	shell) run:
+		sudo mysqldump -u root -p OGDataBase OGDataTable > DataTableAfterPart1.sql
 
-	copy that text in to this document then copy it from this document then deleate the hidden character between the ( an the o then copy the modified version and run it in the mysql shell. (The second copy is important as the text has hidden characters which will mess you up)
-Step 11:
-	run 
-	SET GLOBAL local_infile = 1;
-	to turn on local file copying
-Step 12:
-	run:
-	LOAD DATA LOCAL INFILE '<local path>CompanyDataCleaned.csv' INTO TABLE OGDataTable FIELDS TERMINATED BY ',' ENCLOSED BY '"' LINES TERMINATED BY '\n' IGNORE 1 ROWS;
-	making sure to replace <local path> with the path before the csv file to load the data
-Step 13:
-	give up at trying to make step 12 work
-Step 14:
-	run sqlInsertInToTableFromCSV.py
-	this will spit out a line so long it will take a minute to past in to the terminal. Past this line in to the mysql shell and it will populate the table
-Step 15:
-	open up a new terminal window to the directory and run:
-	mysqldump -u root -p OGDataBase OGDataTable > OGDataTable.sql
-
-Step 16:
-	rename. The newly created:
-	OGDataTable.sql
-	to
-	DataTableAfterPart1.sql
-
-Phase 2:
+---Phase 2---
 Step 1:
-	run sqlNormalizationChecker.py
-	it will spit out:
-	CREATE TABLE baseStuff AS SELECT DISTINCT orderID,productID,unitPrice,quantity,discount FROM OGDataTable;CREATE TABLE orderIDStuff AS SELECT DISTINCT orderID,customerID,employeeID,orderDate,requiredDate,shippedDate,shipVia,Freight FROM OGDataTable;CREATE TABLE customerIDStuff AS SELECT DISTINCT customerID,companyName,contactName,contactTitle FROM OGDataTable;CREATE TABLE employeeIDStuff AS SELECT DISTINCT employeeID,employees_lastName,employees_firstName,employees_title FROM OGDataTable;CREATE TABLE productIDStuff AS SELECT DISTINCT productID,productName,supplierID,categoryID,quantityPerUnit,unitPrice_1,unitsInStock,unitsOnOrder,reorderLevel FROM OGDataTable;CREATE TABLE supplierIDStuff AS SELECT DISTINCT supplierID,suppliers_companyName,suppliers_contactName,suppliers_contactTitle FROM OGDataTable;CREATE TABLE categoryIDStuff AS SELECT DISTINCT categoryID,categoryName FROM OGDataTable;CREATE TABLE quantityPerUnitStuff AS SELECT DISTINCT quantityPerUnit,discontinued FROM OGDataTable;
+	In the MySQL shell, copy and paste the commands in
+	"NormalizedTablesCreator.sql".
 
-	past that in the mysql terminal
-Step 15:
-	open up the other terminal window and run:
-	mysqldump -u root -p OGDataBase OGDataTable > OGDataTable.sql
-Step 3:
-	rename. The newly created:
-	OGDataTable.sql
-	to
-	DataTableAfterPart2.sql
-
+Step 2:
+	To finish up, in a separate shell (outside of the MySQL
+	shell) run:
+		sudo mysqldump -u root -p OGDataBase OGDataTable baseStuff orderIDStuff customerIDStuff employeeIDStuff productIDStuff supplierIDStuff categoryIDStuff quantityPerUnitStuff > DataTablesAfterPart2.sql
+	
 
 
