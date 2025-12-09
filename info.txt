@@ -57,7 +57,7 @@ Step 1:
 Step 2:
 	To finish up, in a separate shell (outside of the MySQL
 	shell) run:
-		sudo mysqldump -u root -p OGDataBase OGDataTable baseStuff orderIDStuff customerIDStuff employeeIDStuff productIDStuff supplierIDStuff categoryIDStuff quantityPerUnitStuff > DataTablesAfterPart2.sql
+		sudo mysqldump -u root -p OGDataBase OGDataTable orderProducts orders customers employees products suppliers categories quantities > DataTablesAfterPart2.sql
 	
 
 
