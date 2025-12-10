@@ -117,9 +117,13 @@ for i in tables[1:]:
 #for i in tables:
 #    print(i)
 #print("_"*30)
+
+
+
 for c, i in enumerate(tables2):
+    pass
     #print(i)
-    print(f"CREATE TABLE {i.split(',')[0] if c != 0 else 'base'}Stuff AS SELECT DISTINCT {i} FROM OGDataTable;", end="")
+    #print(f"CREATE TABLE {i.split(',')[0] if c != 0 else 'base'}Stuff AS SELECT DISTINCT {i} FROM OGDataTable;", end="")
     #print(f"DROP TABLE {i.split(',')[0] if c != 0 else 'base'}Stuff;", end="")
 for c, i in enumerate(tables2):
     sp = i.split(",")
@@ -132,6 +136,7 @@ for c, i in enumerate(tables2):
             print("uto", j,i,f[j],c)
 
 
+print("\n"*2)
 
 
 newData = [[] for i in tables2]
@@ -153,8 +158,28 @@ for i in newData:
         for c, k in enumerate(j):
             seenStuff[c][k] = True
     uniqueMap.append([j for j in range(len(i[0])) if len(seenStuff[j]) == len(i)])
-        
-        
+
+out = []
+for c, i in enumerate(tables2):
+    sp = i.split(",")
+    for cc, j in enumerate(sp):
+        if cc in uniqueMap[c]:
+            out.append(f"ALTER TABLE {sp[0] if c != 0 else 'base'}Stuff ADD CONSTRAINT unique_{j} UNIQUE ({j});")
+
+for c, i in enumerate(tables2):
+    sp = i.split(",")
+    if uniqueMap[c] != []:
+        out.append(f"ALTER TABLE {sp[0] if c != 0 else 'base'}Stuff ADD PRIMARY KEY ({sp[0]});")
+    else:
+        out.append(f"ALTER TABLE {sp[0] if c != 0 else 'base'}Stuff ADD PRIMARY KEY ({sp[0]}, {sp[1]});")
+print("".join(out))
+
+
+
+
+
+
+
 
 
 

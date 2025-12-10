@@ -86,5 +86,17 @@ Step 3:
 	to
 	DataTableAfterPart2.sql
 
-
+Phase 4:
+	run findPart4Stuff.py
+	it will spit out:
+	ALTER TABLE orderIDStuff ADD CONSTRAINT unique_orderID UNIQUE (orderID);ALTER TABLE customerIDStuff ADD CONSTRAINT unique_customerID UNIQUE (customerID);ALTER TABLE customerIDStuff ADD CONSTRAINT unique_companyName UNIQUE (companyName);ALTER TABLE customerIDStuff ADD CONSTRAINT unique_contactName UNIQUE (contactName);ALTER TABLE employeeIDStuff ADD CONSTRAINT unique_employeeID UNIQUE (employeeID);ALTER TABLE employeeIDStuff ADD CONSTRAINT unique_employees_lastName UNIQUE (employees_lastName);ALTER TABLE employeeIDStuff ADD CONSTRAINT unique_employees_firstName UNIQUE (employees_firstName);ALTER TABLE productIDStuff ADD CONSTRAINT unique_productID UNIQUE (productID);ALTER TABLE productIDStuff ADD CONSTRAINT unique_productName UNIQUE (productName);ALTER TABLE supplierIDStuff ADD CONSTRAINT unique_supplierID UNIQUE (supplierID);ALTER TABLE supplierIDStuff ADD CONSTRAINT unique_suppliers_companyName UNIQUE (suppliers_companyName);ALTER TABLE categoryIDStuff ADD CONSTRAINT unique_categoryID UNIQUE (categoryID);ALTER TABLE categoryIDStuff ADD CONSTRAINT unique_categoryName UNIQUE (categoryName);ALTER TABLE quantityPerUnitStuff ADD CONSTRAINT unique_quantityPerUnit UNIQUE (quantityPerUnit);ALTER TABLE baseStuff ADD PRIMARY KEY (orderID, productID);ALTER TABLE orderIDStuff ADD PRIMARY KEY (orderID);ALTER TABLE customerIDStuff ADD PRIMARY KEY (customerID);ALTER TABLE employeeIDStuff ADD PRIMARY KEY (employeeID);ALTER TABLE productIDStuff ADD PRIMARY KEY (productID);ALTER TABLE supplierIDStuff ADD PRIMARY KEY (supplierID);ALTER TABLE categoryIDStuff ADD PRIMARY KEY (categoryID);ALTER TABLE quantityPerUnitStuff ADD PRIMARY KEY (quantityPerUnit);
+	past that in the mysql terminal
+Step 15:
+	open up the other terminal window and run:
+	mysqldump -u root -p OGDataBase OGDataTable > OGDataTable.sql
+Step 3:
+	rename. The newly created:
+	OGDataTable.sql
+	to
+	DataTableAfterPart4.sql
 
