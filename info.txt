@@ -59,5 +59,18 @@ Step 2:
 	shell) run:
 		sudo mysqldump -u root -p OGDataBase OGDataTable orderProducts orders customers employees products suppliers categories quantities > DataTablesAfterPart2.sql
 	
+---Phase 3---
+This phase is just an ER diagram. We have created one using
+draw.io. Both the .drawio and the .pdf versions should be
+available in the repository.
 
+---Phase 4---
+Step 1:
+	In the MySQL shell, copy and pase the commands in
+	"TableModifications.sql"
 
+Step 4:
+	To finish up, in a separate shell (outside of the MySQL
+	shell) run:
+		sudo mysqldump -u root -p OGDataBase OGDataTable orderProducts orders customers employees products suppliers categories quantities > DataTablesAfterPart4.sql
+	
