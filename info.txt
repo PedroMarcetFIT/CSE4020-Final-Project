@@ -2,8 +2,9 @@ Dependencies:
 	- MySQL Ver 9.5.0
 
 Setup:
-	This should be done in a linux/mac terminal. With Windows
-	machines, WSL works.
+	This should be done in a linux terminal. With Windows
+	machines, WSL works. With MacOS machines, you'll need the
+	"brew" equivalent to the "sudo" commands.
 	Run the following commands:
 		sudo apt update
 		sudo apt install mysql-server

@@ -1,3 +1,4 @@
+DROP TABLE IF EXISTS OGDataTable;
 CREATE TABLE OGDataTable (
 	orderID INT,
 	customerID VARCHAR(255),
