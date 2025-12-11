@@ -53,6 +53,7 @@ Step 7:
 Step 1:
 	In the MySQL shell, copy and paste the commands in
 	"NormalizedTablesCreator.sql".
+	This will create many tables that normalize the DB.
 
 Step 2:
 	To finish up, in a separate shell (outside of the MySQL
@@ -67,10 +68,39 @@ available in the repository.
 ---Phase 4---
 Step 1:
 	In the MySQL shell, copy and pase the commands in
-	"TableModifications.sql"
+	"TableModifications.sql".
+	This will modify the tables as per the ERD.
 
 Step 4:
 	To finish up, in a separate shell (outside of the MySQL
 	shell) run:
 		sudo mysqldump -u root -p OGDataBase OGDataTable orderProducts orders customers employees products suppliers categories quantities > DataTablesAfterPart4.sql
 	
+---Phase 5---
+Step 1:
+	In the MySQL shell, copy and paste the commands in
+	"ViewCreator.sql".
+	This will create the requested view.
+
+Step 2:
+	In the MySQL shell, copy and paste the commands in
+	"SaleTrigger.sql".
+	This will create the requested trigger.
+
+Step 3:
+	In the MySQL shell, copy and paste the commands in
+	"RestockProcedure.sql".
+	This will create the requested procedure.
+
+---Phase 6---
+Step 1:
+	In the MySQL shell, copy and paste the commands in 
+	"phase6.sql".
+	This will create the two requested users.
+Step 2: 
+	Apply the privilege changes:
+	FLUSH PRIVILEGES;
+Step 3:
+	Verify privileges for each user:
+	SHOW GRANTS FOR 'AlexSmith'@'localhost';
+    SHOW GRANTS FOR 'JamieLee'@'localhost';
