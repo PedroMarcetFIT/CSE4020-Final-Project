@@ -91,3 +91,16 @@ Step 3:
 	In the MySQL shell, copy and paste the commands in
 	"RestockProcedure.sql".
 	This will create the requested procedure.
+
+---Phase 6---
+Step 1:
+	In the MySQL shell, copy and paste the commands in 
+	"phase6.sql".
+	This will create the two requested users.
+Step 2: 
+	Apply the privilege changes:
+	FLUSH PRIVILEGES;
+Step 3:
+	Verify privileges for each user:
+	SHOW GRANTS FOR 'AlexSmith'@'localhost';
+    SHOW GRANTS FOR 'JamieLee'@'localhost';
