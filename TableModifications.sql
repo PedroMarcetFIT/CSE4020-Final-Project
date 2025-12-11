@@ -1,60 +1,68 @@
+-- Adding Primary Keys --
+ALTER TABLE orderProducts
+    ADD PRIMARY KEY (orderID, productID);
+
 ALTER TABLE orders
-ADD CONSTRAINT unique_orderID UNIQUE (orderID);
+    ADD PRIMARY KEY (orderID);
 
 ALTER TABLE customers
-ADD CONSTRAINT unique_customerID UNIQUE (customerID);
-
-ALTER TABLE customers
-ADD CONSTRAINT unique_companyName UNIQUE (companyName);
-
-ALTER TABLE customers
-ADD CONSTRAINT unique_contactName UNIQUE (contactName);
+    ADD PRIMARY KEY (customerID);
 
 ALTER TABLE employees
-ADD CONSTRAINT unique_employeeID UNIQUE (employeeID);
-ALTER TABLE employees
-ADD CONSTRAINT unique_employees_lastName UNIQUE (employees_lastName);
-ALTER TABLE employees
-ADD CONSTRAINT unique_employees_firstName UNIQUE (employees_firstName);
+    ADD PRIMARY KEY (employeeID);
 
 ALTER TABLE products
-ADD CONSTRAINT unique_productID UNIQUE (productID);
-ALTER TABLE products
-ADD CONSTRAINT unique_productName UNIQUE (productName);
+    ADD PRIMARY KEY (productID);
 
 ALTER TABLE suppliers
-ADD CONSTRAINT unique_supplierID UNIQUE (supplierID);
-ALTER TABLE suppliers
-ADD CONSTRAINT unique_suppliers_companyName UNIQUE (suppliers_companyName);
+    ADD PRIMARY KEY (supplierID);
 
 ALTER TABLE categories
-ADD CONSTRAINT unique_categoryID UNIQUE (categoryID);
-ALTER TABLE categories
-ADD CONSTRAINT unique_categoryName UNIQUE (categoryName);
+    ADD PRIMARY KEY (categoryID);
 
 ALTER TABLE quantities
-ADD CONSTRAINT unique_quantityPerUnit UNIQUE (quantityPerUnit);
+    ADD PRIMARY KEY (quantityPerUnit);
+
+
+-- Foreign Keys --
+ALTER TABLE orders
+    ADD CONSTRAINT fkOrdertoCustomer
+    FOREIGN KEY (customerID) REFERENCES customers(customerID);
+
+ALTER TABLE orders
+    ADD CONSTRAINT fkOrdertoEmployee
+    FOREIGN KEY (employeeID) REFERENCES employees(employeeID);
+
+ALTER TABLE products
+    ADD CONSTRAINT fkProducttoQuantity
+    FOREIGN KEY (quantityPerUnit) REFERENCES quantities(quantityPerUnit);
+
+ALTER TABLE products
+    ADD CONSTRAINT fkProducttoSupplier
+    FOREIGN KEY (supplierID) REFERENCES suppliers(supplierID);
+
+ALTER TABLE products
+    ADD CONSTRAINT fkProducttoCategories
+    FOREIGN KEY (categoryID) REFERENCES categories(categoryID);
 
 ALTER TABLE orderProducts
-ADD PRIMARY KEY (orderID, productID);
+    ADD CONSTRAINT fkOPtoProducts
+    FOREIGN KEY (productID) REFERENCES products(productID);
 
-ALTER TABLE orders
-ADD PRIMARY KEY (orderID);
+ALTER TABLE orderProducts
+    ADD CONSTRAINT fkOPtoOrders
+    FOREIGN KEY (orderID) REFERENCES orders(orderID);
 
-ALTER TABLE customers
-ADD PRIMARY KEY (customerID);
 
-ALTER TABLE employees
-ADD PRIMARY KEY (employeeID);
+-- Ensuring Cascading Deletes When Appropriate --
+ALTER TABLE orderProducts
+    DROP FOREIGN KEY fkOPtoOrders,
+    ADD CONSTRAINT fkOPtoOrders
+        FOREIGN KEY (orderID) REFERENCES orders(orderID)
+        ON DELETE CASCADE;
 
-ALTER TABLE products
-ADD PRIMARY KEY (productID);
-
-ALTER TABLE suppliers
-ADD PRIMARY KEY (supplierID);
-
-ALTER TABLE categories
-ADD PRIMARY KEY (categoryID);
-
-ALTER TABLE quantities
-ADD PRIMARY KEY (quantityPerUnit);
+ALTER TABLE orderProducts
+    DROP FOREIGN KEY fkOPtoProducts,
+    ADD CONSTRAINT fkOPtoProducts
+    FOREIGN KEY (productID) REFERENCES products(productID)
+    ON DELETE CASCADE;
