@@ -105,3 +105,9 @@ Step 3:
 	Verify privileges for each user:
 	SHOW GRANTS FOR 'AlexSmith'@'localhost';
     SHOW GRANTS FOR 'JamieLee'@'localhost';
+
+---Phase 7---
+	To create a backup file, use the command:
+		sudo mysqldump -u root -p OGDataBase > backup.sql
+	This will generat the file "backup.sql" which can be moved
+	to a USB for safe keeping.
