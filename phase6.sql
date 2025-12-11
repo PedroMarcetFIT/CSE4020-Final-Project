@@ -1,4 +1,4 @@
--- Phase 6: User Management and Privileges (No passwords)
+-- Phase 6: User Management and Privileges
 -- Database: OGDataBase
 
 -- Optional: Drop users first if they already exist (safe to run multiple times)
