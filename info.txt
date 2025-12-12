@@ -96,7 +96,7 @@ Step 3:
 ---Phase 6---
 Step 1:
 	In the MySQL shell, copy and paste the commands in 
-	"phase6.sql".
+	"UserManagementPrivileges.sql".
 	This will create the two requested users.
 Step 2: 
 	Apply the privilege changes:
