@@ -1,7 +1,6 @@
 -- Phase 6: User Management and Privileges
--- Database: OGDataBase
 
--- Optional: Drop users first if they already exist (safe to run multiple times)
+-- Drop users first if they already exist (safe to run multiple times)
 DROP USER IF EXISTS 'AlexSmith'@'localhost';
 DROP USER IF EXISTS 'JamieLee'@'localhost';
 
@@ -16,6 +15,6 @@ GRANT SELECT ON OGDataBase.* TO 'JamieLee'@'localhost';
 -- Apply changes
 FLUSH PRIVILEGES;
 
--- Optional: Verify grants
+-- Verify grants
 SHOW GRANTS FOR 'AlexSmith'@'localhost';
 SHOW GRANTS FOR 'JamieLee'@'localhost';
